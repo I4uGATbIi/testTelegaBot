@@ -1,4 +1,4 @@
-﻿import telebot
+﻿import pytelegrambotapi as telebot
 import os
 from flask import Flask, request
 
@@ -6,7 +6,6 @@ token = "477553068:AAEVHkJonLhCNMcK56v91vFcoD3SKKQUcJI"
 
 bot = telebot.TeleBot(token)
 server = Flask(__name__)
-
 
 @bot.message_handler(commands=['start'])
 def start(message):
