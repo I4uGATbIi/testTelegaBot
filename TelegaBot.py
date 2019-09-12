@@ -18,6 +18,7 @@ cur = conn.cursor()
 cur.execute(
     "CREATE TABLE IF NOT EXISTS chats_ids (chat_id int PRIMARY KEY);")
 conn.commit()
+cur.close()
 
 
 @bot.message_handler(commands=['start'])
@@ -25,8 +26,10 @@ def start(message):
     logger.warning("START!")
     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
     try:
+        cur = conn.cursor()
         cur.execute("INSERT INTO chats_ids VALUES(" + str(message.chat.id) + ")")
         conn.commit()
+        cur.close()
     except Exception:
         logger.warning("Already Exists " + str(message.chat.id))
 
@@ -34,9 +37,10 @@ def start(message):
 @bot.message_handler(commands=['alertall'])
 def alert_all(message):
     logger.warning("Allerting everyone")
-    select_cursor = conn.cursor()
-    select_cursor.execute("SELECT * FROM chats_ids;")
-    chats_ids = select_cursor.fetchall()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM chats_ids;")
+    chats_ids = cur.fetchall()
+    cur.close()
     for chat_id in chats_ids:
         bot.send_message(chat_id[0], "Произошёл кринж у пользователя - " + message.from_user.first_name)
 
@@ -47,8 +51,10 @@ def echo_message(message):
     logger.warning("Adding chat " + str(message.chat.id))
     lol = int(message.chat.id)
     try:
+        cur = conn.cursor()
         cur.execute("INSERT INTO chats_ids VALUES(" + str(lol) + ")")
         conn.commit()
+        cur.close()
     except Exception:
         logger.warning("Already Exists " + str(message.chat.id))
     bot.send_message(message.chat.id, "Здрасьте!Йопт!")
