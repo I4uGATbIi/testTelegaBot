@@ -41,7 +41,8 @@ def allertall(message):
 def echo_message(message):
     logger.warning("ANSWER!")
     logger.warning("Adding chat " + str(message.chat.id))
-    cur.execute("INSERT INTO chats_ids VALUES(%s)", message.chat.id)
+    lol = int(message.chat.id)
+    cur.execute("INSERT INTO chats_ids VALUES("+str(lol)+")")
     bot.send_message(message.chat.id, "Здрасьте!Йопт!")
 
 
