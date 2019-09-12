@@ -2,3 +2,4 @@ telegram
 pytelegrambotapi
 six
 flask
+psycopg2-binary
