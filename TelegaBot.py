@@ -54,7 +54,7 @@ def alert_all(message):
             logger.warning("Sending to " + str(chat_id))
             try:
                 bot.send_message(chat_id[0], "Произошёл кринж у пользователя - " + message.from_user.first_name)
-                bot.send_sticker(chat_id[0], 'https://www.psychologos.ru/uploads/tests/64sc/49tk0c38.jpg')
+                bot.send_photo(chat_id[0], 'https://www.psychologos.ru/uploads/tests/64sc/49tk0c38.jpg')
             except Exception:
                 logger.warning("Chat " + str(chat_id) + " OHUEL")
     except Exception as e:
