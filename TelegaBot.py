@@ -45,6 +45,7 @@ def alert_all(message):
         cur = conn.cursor()
         cur.execute("SELECT * FROM chats_ids;")
         chats_ids = cur.fetchall()
+        logger.warning("Chats to send : " + str(chats_ids))
         cur.close()
         conn.close()
         for chat_id in chats_ids:
