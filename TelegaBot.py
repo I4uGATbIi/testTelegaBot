@@ -17,7 +17,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
 cur.execute(
-    "CREATE TABLE IF NOT EXISTS chats_ids (id int NOT NULL AUTO INCREMENT,chat_id int NOT NULL UNIQUE,PRIMARY KEY (id));")
+    "CREATE TABLE IF NOT EXISTS chats_ids (chat_id int PRIMARY KEY);")
 
 
 @bot.message_handler(commands=['start'])
