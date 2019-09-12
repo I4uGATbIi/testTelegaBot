@@ -18,13 +18,14 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
 cur.execute(
     "CREATE TABLE IF NOT EXISTS chats_ids (chat_id int PRIMARY KEY);")
-
+conn.commit()
 
 @bot.message_handler(commands=['start'])
 def start(message):
     logger.warning("START!")
     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
     cur.execute("INSERT INTO chats_ids VALUES(%s)", message.chat.id)
+    conn.commit()
 
 
 @bot.message_handler(commands=['alertall'])
