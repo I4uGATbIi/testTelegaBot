@@ -35,5 +35,5 @@ def webhook():
     return "!", 200
 
 
-server.logger().log(1,"SUKA");
+server.logger().log(1,"SUKA")
 server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))
