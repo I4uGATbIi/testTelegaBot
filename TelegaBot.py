@@ -40,6 +40,7 @@ def allertall(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
     logger.warning("ANSWER!")
+    logger.warning("Adding chat " + message.chat.id)
     cur.execute("INSERT INTO chats_ids VALUES(%s)", message.chat.id)
     bot.send_message(message.chat.id, "Здрасьте!Йопт!")
 
