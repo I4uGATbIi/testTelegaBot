@@ -11,10 +11,12 @@ server = Flask(__name__)
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
+    print("DA VIZHU YOPT")
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
+    print('LOVI OTVET')
     bot.reply_to(message, message.text)
 
 
@@ -28,6 +30,7 @@ def getMessage():
 def webhook():
     bot.remove_webhook()
     bot.set_webhook(url="https://calm-temple-62052.herokuapp.com/" + token)
+    print("HOOK SET")
     return "!", 200
 
 
