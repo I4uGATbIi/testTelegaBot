@@ -10,7 +10,6 @@ bot = telebot.TeleBot(token)
 server = Flask(__name__)
 logger = logging.getLogger(__file__)
 
-
 logger.warning("CREATING TABLE!")
 DATABASE_URL = os.environ['DATABASE_URL']
 
@@ -19,6 +18,7 @@ cur = conn.cursor()
 cur.execute(
     "CREATE TABLE IF NOT EXISTS chats_ids (chat_id int PRIMARY KEY);")
 conn.commit()
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -29,7 +29,6 @@ def start(message):
         conn.commit()
     except Exception:
         logger.warning("Already Exists " + str(message.chat.id))
-
 
 
 @bot.message_handler(commands=['alertall'])
@@ -47,7 +46,7 @@ def echo_message(message):
     logger.warning("Adding chat " + str(message.chat.id))
     lol = int(message.chat.id)
     try:
-        cur.execute("INSERT INTO chats_ids VALUES("+str(lol)+")")
+        cur.execute("INSERT INTO chats_ids VALUES(" + str(lol) + ")")
         conn.commit()
     except Exception:
         logger.warning("Already Exists " + str(message.chat.id))
