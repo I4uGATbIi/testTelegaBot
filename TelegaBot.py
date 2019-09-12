@@ -10,6 +10,8 @@ bot = telebot.TeleBot(token)
 server = Flask(__name__)
 logger = logging.getLogger(__file__)
 
+
+logger.warning("CREATING TABLE!")
 DATABASE_URL = os.environ['DATABASE_URL']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
