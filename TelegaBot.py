@@ -2,7 +2,7 @@
 import os
 import logging
 from flask import Flask, request
-from telegram.ext import Updater
+# from telegram.ext import Updater
 
 token = "477553068:AAEVHkJonLhCNMcK56v91vFcoD3SKKQUcJI"
 
@@ -32,18 +32,19 @@ def getMessage():
 
 @server.route("/")
 def webhook():
-    PORT = int(os.environ.get('PORT', '8443'))
-    updater = Updater(token)
-    updater.start_webhook(listen='0.0.0.0',
-                          port=PORT,
-                          url_path=token)
+    # PORT = int(os.environ.get('PORT', '8443'))
+    # updater = Updater(token)
+    # updater.start_webhook(listen='0.0.0.0',
+    #                       port=PORT,
+    #                       url_path=token)
     bot.remove_webhook()
 
     bot.set_webhook(url="https://calm-temple-62052.herokuapp.com/" + token)
-    updater.idle()
+    # updater.idle()
     logger.warning("HOOK!")
     return "!", 200
 
 
 logger.warning("SERVERSTART!")
 server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000), debug=True)
+webhook()
