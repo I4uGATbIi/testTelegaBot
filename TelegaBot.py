@@ -14,7 +14,8 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
-cur.execute("CREATE TABLE IF NOT EXISTS `chats_ids` (`chat_id` int NOT NULL UNIQUE,PRIMARY KEY (`chat_id`));")
+cur.execute(
+    "CREATE TABLE IF NOT EXISTS `chats_ids` (`id` int NOT NULL AUTO INCREMENT,`chat_id` int NOT NULL UNIQUE,PRIMARY KEY (`id`));")
 
 
 @bot.message_handler(commands=['start'])
@@ -27,7 +28,7 @@ def start(message):
 @bot.message_handler(commands=['alertall'])
 def allertall(message):
     logger.warning("Allerting everyone")
-    cur.execute("SELECT * FROM `chats_ids`")
+    cur.execute("SELECT `chat_id` FROM `chats_ids`")
     chats_ids = cur.fetchall()
     for chat_id in chats_ids:
         bot.send_message(chat_id, "Произошёл кринж у пользователя - " + message.from_user.first_name)
