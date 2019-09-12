@@ -35,7 +35,7 @@ def start(message):
 @bot.message_handler(commands=['alertall'])
 def alert_all(message):
     logger.warning("Allerting everyone")
-    cur.execute("SELECT chat_id FROM chats_ids")
+    cur.execute("SELECT 1 as chat_id FROM chats_ids")
     chats_ids = cur.fetchall()
     for chat_id in chats_ids:
         bot.send_message(chat_id, "Произошёл кринж у пользователя - " + message.from_user.first_name)
