@@ -37,12 +37,15 @@ def start(message):
 @bot.message_handler(commands=['alertall'])
 def alert_all(message):
     logger.warning("Allerting everyone")
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM chats_ids;")
-    chats_ids = cur.fetchall()
-    cur.close()
-    for chat_id in chats_ids:
-        bot.send_message(chat_id[0], "Произошёл кринж у пользователя - " + message.from_user.first_name)
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM chats_ids;")
+        chats_ids = cur.fetchall()
+        cur.close()
+        for chat_id in chats_ids:
+            bot.send_message(chat_id[0], "Произошёл кринж у пользователя - " + message.from_user.first_name)
+    except Exception as e:
+        logger.warning(e.__str__())
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
