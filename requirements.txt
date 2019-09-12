@@ -1,9 +1,3 @@
-certifi==2018.8.24
-chardet==3.0.4
-idna==2.7
-requests==2.7.0
-urllib3==1.23
-virtualenv==16.0.0
 pytelegrambotapi==3.6.6
 six==1.11.0
 flask==1.1.1
