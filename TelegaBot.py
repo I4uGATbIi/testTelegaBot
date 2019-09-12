@@ -49,6 +49,7 @@ def alert_all(message):
         cur.close()
         conn.close()
         for chat_id in chats_ids:
+            logger.warning("Sending to " + str(chat_id))
             bot.send_message(chat_id[0], "Произошёл кринж у пользователя - " + message.from_user.first_name)
     except Exception as e:
         logger.warning(e.__str__())
