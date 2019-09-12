@@ -1,4 +1,4 @@
-﻿import pytelegrambotapi as telebot
+﻿import telebot
 import os
 from flask import Flask, request
 
