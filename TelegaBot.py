@@ -46,6 +46,7 @@ def alert_all(message):
             bot.send_message(chat_id[0], "Произошёл кринж у пользователя - " + message.from_user.first_name)
     except Exception as e:
         logger.warning(e.__str__())
+        cur.close()
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
