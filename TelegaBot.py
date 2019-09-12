@@ -24,12 +24,16 @@ conn.commit()
 def start(message):
     logger.warning("START!")
     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
-    cur.execute("INSERT INTO chats_ids VALUES(%s)", message.chat.id)
-    conn.commit()
+    try:
+        cur.execute("INSERT INTO chats_ids VALUES(" + str(message.chat.id) + ")")
+        conn.commit()
+    except Exception:
+        logger.warning("Already Exists " + str(message.chat.id))
+
 
 
 @bot.message_handler(commands=['alertall'])
-def allertall(message):
+def alert_all(message):
     logger.warning("Allerting everyone")
     cur.execute("SELECT chat_id FROM chats_ids")
     chats_ids = cur.fetchall()
@@ -42,7 +46,11 @@ def echo_message(message):
     logger.warning("ANSWER!")
     logger.warning("Adding chat " + str(message.chat.id))
     lol = int(message.chat.id)
-    cur.execute("INSERT INTO chats_ids VALUES("+str(lol)+")")
+    try:
+        cur.execute("INSERT INTO chats_ids VALUES("+str(lol)+")")
+        conn.commit()
+    except Exception:
+        logger.warning("Already Exists " + str(message.chat.id))
     bot.send_message(message.chat.id, "Здрасьте!Йопт!")
 
 
