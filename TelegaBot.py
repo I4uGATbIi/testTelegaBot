@@ -20,7 +20,8 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
     logger.warning("ANSWER!")
-    bot.reply_to(message, message.text)
+    # bot.reply_to(message, message.text)
+    bot.send_message(message.chat,"ТЫ ЛОХ ПА ЖЫЗНИ,ПИДАР ПО МАСТИ!")
 
 
 @server.route("/" + token, methods=['POST'])
