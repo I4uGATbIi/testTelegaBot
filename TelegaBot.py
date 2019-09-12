@@ -19,6 +19,7 @@ cur.execute(
     "CREATE TABLE IF NOT EXISTS chats_ids (chat_id int PRIMARY KEY);")
 conn.commit()
 cur.close()
+conn.close()
 
 
 @bot.message_handler(commands=['start'])
@@ -26,10 +27,12 @@ def start(message):
     logger.warning("START!")
     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
     try:
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute("INSERT INTO chats_ids VALUES(" + str(message.chat.id) + ")")
         conn.commit()
         cur.close()
+        conn.close()
     except Exception:
         logger.warning("Already Exists " + str(message.chat.id))
 
@@ -38,10 +41,12 @@ def start(message):
 def alert_all(message):
     logger.warning("Allerting everyone")
     try:
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute("SELECT * FROM chats_ids;")
         chats_ids = cur.fetchall()
         cur.close()
+        conn.close()
         for chat_id in chats_ids:
             bot.send_message(chat_id[0], "Произошёл кринж у пользователя - " + message.from_user.first_name)
     except Exception as e:
@@ -55,10 +60,12 @@ def echo_message(message):
     logger.warning("Adding chat " + str(message.chat.id))
     lol = int(message.chat.id)
     try:
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute("INSERT INTO chats_ids VALUES(" + str(lol) + ")")
         conn.commit()
         cur.close()
+        conn.close()
     except Exception:
         logger.warning("Already Exists " + str(message.chat.id))
     bot.send_message(message.chat.id, "Здрасьте!Йопт!")
