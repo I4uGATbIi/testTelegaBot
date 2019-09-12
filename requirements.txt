@@ -6,3 +6,4 @@ urllib3==1.23
 virtualenv==16.0.0
 pytelegrambotapi==3.6.6
 six==1.11.0
+flask==1.1.1
