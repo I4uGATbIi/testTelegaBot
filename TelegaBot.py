@@ -5,6 +5,7 @@ from flask import Flask, request
 token = "477553068:AAEVHkJonLhCNMcK56v91vFcoD3SKKQUcJI"
 
 bot = telebot.TeleBot(token)
+print(bot)
 server = Flask(__name__)
 
 
