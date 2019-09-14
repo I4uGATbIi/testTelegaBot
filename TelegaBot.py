@@ -18,9 +18,9 @@ def start(message):
     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
     try:
         users = db.getConnection()['users']
-        user = {"_id": message.from_user.id, "first_name": message.from_user.first_name,
-                "last_name": message.from_user.last_name, "username": message.from_user.username,
-                "chat_id": message.chat.id}
+        user = {"_id": message.from_user.id, "firstname": message.from_user.first_name,
+                "lastname": message.from_user.last_name, "username": message.from_user.username,
+                "chatId": message.chat.id}
         logger.warning(user)
         users.insert_one(user)
     except Exception as e:
@@ -32,16 +32,16 @@ def alert_all(message):
     logger.warning("Allerting everyone")
     try:
         users = db.getConnection()['users']
-        collection = users.find({}, {"chat_id": 1})
+        collection = users.find({}, {"chatId": 1})
         #logger.warning("Chats to send : " + str(collection))
         for user in collection:
-            logger.warning("Sending to " + str(user["chat_id"]))
+            logger.warning("Sending to " + str(user["chatId"]))
             try:
-                bot.send_message(user["chat_id"], "Произошёл кринж у пользователя - " + message.from_user.first_name)
-                bot.send_photo(user["chat_id"],
+                bot.send_message(user["chatId"], "Произошёл кринж у пользователя - " + message.from_user.first_name)
+                bot.send_photo(user["chatId"],
                                'https://cs8.pikabu.ru/images/big_size_comm/2016-01_4/1453051436159957875.jpg')
             except Exception:
-                logger.warning("Chat " + str(user["chat_id"]) + " OHUEL")
+                logger.warning("Chat " + str(user["chatId"]) + " OHUEL")
     except Exception as e:
         logger.warning(e.__str__())
 
@@ -52,10 +52,11 @@ def echo_message(message):
     logger.warning("Adding chat " + str(message.chat.id))
     try:
         users = db.getConnection()['users']
-        user = {"_id": message.from_user.id, "first_name": message.from_user.first_name,
-                "last_name": message.from_user.last_name, "username": message.from_user.username,
-                "chat_id": message.chat.id}
+        user = {"_id": message.from_user.id, "firstname": message.from_user.first_name,
+                "lastname": message.from_user.last_name, "username": message.from_user.username,
+                "chatId": message.chat.id}
         logger.warning("BEFORE SAVE")
+        logger.warning(user)
         users.insert_one(user)
         logger.warning("AFTER SAVE")
     except Exception as e:
