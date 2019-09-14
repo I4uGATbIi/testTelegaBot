@@ -22,7 +22,7 @@ def start(message):
                 "lastname": f'{message.from_user.last_name}', "username": f'{message.from_user.username}',
                 "chatId": message.chat.id}
         logger.warning(user)
-        users.insert_one(user)
+        users.insert(user)
     except Exception as e:
         logger.warning("Something went wrong\n" + e.__str__())
 
@@ -32,8 +32,8 @@ def alert_all(message):
     logger.warning("Allerting everyone")
     try:
         users = db.getConnection()['users']
-        collection = users.find({}, {"chatId": 1})
-        #logger.warning("Chats to send : " + str(collection))
+        collection = users.find()
+        logger.warning("Chats to send : " + str(collection))
         for user in collection:
             logger.warning("Sending to " + str(user["chatId"]))
             try:
@@ -57,7 +57,7 @@ def echo_message(message):
                 "chatId": message.chat.id}
         logger.warning("BEFORE SAVE")
         logger.warning(user)
-        users.insert_one(user)
+        users.insert(user)
         logger.warning("AFTER SAVE")
     except Exception as e:
         logger.warning("Something went wrong\n" + e.__str__())
