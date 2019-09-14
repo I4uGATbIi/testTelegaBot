@@ -18,11 +18,16 @@ def start(message):
     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
     try:
         users = db.getConnection()['users']
-        user = {"_id": message.from_user.id, "firstname": f'{message.from_user.first_name}',
-                "lastname": f'{message.from_user.last_name}', "username": f'{message.from_user.username}',
-                "chatId": message.chat.id}
-        logger.warning(user)
-        users.insert(user)
+        myquery = {"chatId": message.chat.id}
+        mydoc = users.find(myquery)
+        if len(mydoc) < 1:
+            user = {"userId": message.from_user.id, "firstName": f'{message.from_user.first_name}',
+                    "lastName": f'{message.from_user.last_name}', "userName": f'{message.from_user.username}',
+                    "chatId": message.chat.id}
+            logger.warning(user)
+            users.insert(user)
+        else:
+            logger.warning("Chat already remembered!")
     except Exception as e:
         logger.warning("Something went wrong\n" + e.__str__())
 
@@ -32,9 +37,7 @@ def alert_all(message):
     logger.warning("Allerting everyone")
     try:
         users = db.getConnection()['users']
-        collection = users.find()
-        logger.warning("Chats to send : " + str(collection))
-        for user in collection:
+        for user in users.find():
             logger.warning("Sending to " + str(user["chatId"]))
             try:
                 bot.send_message(user["chatId"], "Произошёл кринж у пользователя - " + message.from_user.first_name)
@@ -52,13 +55,16 @@ def echo_message(message):
     logger.warning("Adding chat " + str(message.chat.id))
     try:
         users = db.getConnection()['users']
-        user = {"_id": message.from_user.id, "firstname": f'{message.from_user.first_name}',
-                "lastname": f'{message.from_user.last_name}', "username": f'{message.from_user.username}',
-                "chatId": message.chat.id}
-        logger.warning("BEFORE SAVE")
-        logger.warning(user)
-        users.insert(user)
-        logger.warning("AFTER SAVE")
+        myquery = {"chatId": message.chat.id}
+        mydoc = users.find(myquery)
+        if len(mydoc) < 1:
+            user = {"userId": message.from_user.id, "firstName": f'{message.from_user.first_name}',
+                    "lastName": f'{message.from_user.last_name}', "userName": f'{message.from_user.username}',
+                    "chatId": message.chat.id}
+            logger.warning(user)
+            users.insert(user)
+        else:
+            logger.warning("Chat already remembered!")
     except Exception as e:
         logger.warning("Something went wrong\n" + e.__str__())
     bot.send_message(message.chat.id, "Здрасьте!Йопт!")
