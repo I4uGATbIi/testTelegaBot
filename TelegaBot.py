@@ -55,7 +55,9 @@ def echo_message(message):
         user = {"_id": message.from_user.id, "first_name": message.from_user.first_name,
                 "last_name": message.from_user.last_name, "username": message.from_user.username,
                 "chat_id": message.chat.id}
+        logger.warning("BEFORE SAVE")
         users.insert_one(user)
+        logger.warning("AFTER SAVE")
     except Exception as e:
         logger.warning("Something went wrong\n" + e.__str__())
     bot.send_message(message.chat.id, "Здрасьте!Йопт!")
