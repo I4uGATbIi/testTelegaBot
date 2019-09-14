@@ -18,8 +18,8 @@ def start(message):
     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
     try:
         users = db.getConnection()['users']
-        user = {"_id": message.from_user.id, "firstname": message.from_user.first_name,
-                "lastname": message.from_user.last_name, "username": message.from_user.username,
+        user = {"_id": message.from_user.id, "firstname": f'{message.from_user.first_name}',
+                "lastname": f'{message.from_user.last_name}', "username": f'{message.from_user.username}',
                 "chatId": message.chat.id}
         logger.warning(user)
         users.insert_one(user)
@@ -52,8 +52,8 @@ def echo_message(message):
     logger.warning("Adding chat " + str(message.chat.id))
     try:
         users = db.getConnection()['users']
-        user = {"_id": message.from_user.id, "firstname": message.from_user.first_name,
-                "lastname": message.from_user.last_name, "username": message.from_user.username,
+        user = {"_id": message.from_user.id, "firstname": f'{message.from_user.first_name}',
+                "lastname": f'{message.from_user.last_name}', "username": f'{message.from_user.username}',
                 "chatId": message.chat.id}
         logger.warning("BEFORE SAVE")
         logger.warning(user)
