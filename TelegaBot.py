@@ -20,7 +20,7 @@ def start(message):
         users = db.getConnection()['users']
         myquery = {"chatId": message.chat.id}
         mydoc = users.find(myquery)
-        if len(mydoc) < 1:
+        if mydoc.retrieved < 1:
             user = {"userId": message.from_user.id, "firstName": f'{message.from_user.first_name}',
                     "lastName": f'{message.from_user.last_name}', "userName": f'{message.from_user.username}',
                     "chatId": message.chat.id}
@@ -57,7 +57,7 @@ def echo_message(message):
         users = db.getConnection()['users']
         myquery = {"chatId": message.chat.id}
         mydoc = users.find(myquery)
-        if len(mydoc) < 1:
+        if mydoc.retrieved < 1:
             user = {"userId": message.from_user.id, "firstName": f'{message.from_user.first_name}',
                     "lastName": f'{message.from_user.last_name}', "userName": f'{message.from_user.username}',
                     "chatId": message.chat.id}
