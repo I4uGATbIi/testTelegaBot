@@ -18,7 +18,7 @@ def start(message):
     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
     try:
         users = db.getConnection()['users']
-        user = {"__id": message.from_user.id, "first_name": message.from_user.first_name,
+        user = {"_id": message.from_user.id, "first_name": message.from_user.first_name,
                 "last_name": message.from_user.last_name, "username": message.from_user.username,
                 "chat_id": message.chat.id}
         logger.warning(user)
@@ -52,7 +52,7 @@ def echo_message(message):
     logger.warning("Adding chat " + str(message.chat.id))
     try:
         users = db.getConnection()['users']
-        user = {"__id": message.from_user.id, "first_name": message.from_user.first_name,
+        user = {"_id": message.from_user.id, "first_name": message.from_user.first_name,
                 "last_name": message.from_user.last_name, "username": message.from_user.username,
                 "chat_id": message.chat.id}
         users.insert_one(user)
