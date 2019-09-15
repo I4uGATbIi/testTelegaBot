@@ -13,6 +13,7 @@ class Database:
     def getConnection(self):
         if not self.database_conn:
             self.database_conn = self.getClient()['telegram']
+            self.database_conn.authenticate('heroku_kbd1k1h8', 'l4c60tknrm33v0qj1ncnndb7dg')
         return self.database_conn
 
     def getClient(self):
