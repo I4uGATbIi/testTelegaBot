@@ -11,8 +11,11 @@ class Database:
         self.getConnection()
 
     def getConnection(self):
+        if not self.database_conn:
+            self.database_conn = self.getClient()['telegram']
+        return self.database_conn
+
+    def getClient(self):
         if not self.client:
             self.client = pymongo.MongoClient(self.DATABASE_URI)
-        if not self.database_conn:
-            self.database_conn = self.client['telegram']
-        return self.database_conn
+        return self.client
