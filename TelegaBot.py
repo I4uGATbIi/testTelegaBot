@@ -17,10 +17,11 @@ def start(message):
     logger.warning("START!")
     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
     try:
-        users = db.getConnection()['users']
-        myquery = {"chatId": message.chat.id}
-        mydoc = users.find(myquery)
-        if mydoc.retrieved < 1:
+        conn = db.getConnection()
+        users = conn["users"]
+        query = {"chatId": message.chat.id}
+        foundUser = users.find(query)
+        if foundUser.retrieved < 1:
             user = {"userId": message.from_user.id, "firstName": f'{message.from_user.first_name}',
                     "lastName": f'{message.from_user.last_name}', "userName": f'{message.from_user.username}',
                     "chatId": message.chat.id}
@@ -46,7 +47,11 @@ def alert_all(message):
             except Exception:
                 logger.warning("Chat " + str(user["chatId"]) + " OHUEL")
     except Exception as e:
-        logger.warning(e.__str__())
+        dblist = db.getClient().list_database_names()
+        if "telegram" not in dblist:
+            print("The database not exists.")
+        else:
+            logger.warning(e.__str__())
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
@@ -54,10 +59,11 @@ def echo_message(message):
     logger.warning("ANSWER!")
     logger.warning("Adding chat " + str(message.chat.id))
     try:
-        users = db.getConnection()['users']
-        myquery = {"chatId": message.chat.id}
-        mydoc = users.find(myquery)
-        if mydoc.retrieved < 1:
+        conn = db.getConnection()
+        users = conn["users"]
+        query = {"chatId": message.chat.id}
+        foundUser = users.find(query)
+        if foundUser.retrieved < 1:
             user = {"userId": message.from_user.id, "firstName": f'{message.from_user.first_name}',
                     "lastName": f'{message.from_user.last_name}', "userName": f'{message.from_user.username}',
                     "chatId": message.chat.id}
